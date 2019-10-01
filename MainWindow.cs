@@ -18,7 +18,6 @@ namespace Snip2PowerPoint
         private const int TAKE_SNAP_HOTKEY_ID = 1;
 
         // TODO: these probably don't need to be globals
-        private ScreenCapture objScreenCapture;
         private int snapCount;
         private List<Bitmap> snaps;
         private bool enableSnaps = true;
@@ -27,7 +26,6 @@ namespace Snip2PowerPoint
         {
             InitializeComponent();
 
-            objScreenCapture = new ScreenCapture();
             snapCount = 0;
             snaps = new List<Bitmap>();
 
@@ -60,8 +58,7 @@ namespace Snip2PowerPoint
 
         private void TakeSnap()
         {
-            objScreenCapture.SetCanvas();
-            var snap = objScreenCapture.GetSnapShot();
+            var snap = ScreenCapture.GetSnapShot();
             snaps.Add(snap);
             AddToPreview(snap);
             Utility.SaveToOpenPowerPoint(snap);
