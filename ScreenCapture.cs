@@ -19,9 +19,16 @@ namespace Snip2PowerPoint
             {
                 // TODO: figure out why this has to be set here and not in the canvas InitializeComponent() call
                 canvas.TopMost = true;
+                snapshotRect = canvas.GetRectangle();
+
                 if (canvas.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     snapshotRect = canvas.GetRectangle();
+                }
+                else
+                {
+                    // If esc was pressed we don't return a screenshot
+                    return null;
                 }
             }
 

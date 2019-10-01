@@ -48,6 +48,8 @@ namespace Snip2PowerPoint
         private void TakeSnap()
         {
             Bitmap snap = ScreenCapture.GetSnapshotBitmap();
+            if (snap == null) return;
+
             snaps.Add(snap);
             AddToPreview(snap);
             Utility.SaveToOpenPowerPoint(snap);

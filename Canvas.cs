@@ -83,17 +83,5 @@ namespace Snip2PowerPoint
             //this.TopMost = true;
             this.ResumeLayout(false);
         }
-
-        private void Canvas_Shown(object sender, EventArgs e)
-        {
-            this.Activate();
-            MessageBox.Show("Canvas Shown");
-        }
-
-        private void Canvas_Activated(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Normal;
-            MessageBox.Show("Canvas Activated");
-        }
     }
 }
