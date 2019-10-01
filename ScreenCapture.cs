@@ -12,23 +12,24 @@ namespace Snip2PowerPoint
     // and capturing an image from the user's selection 
     public static class ScreenCapture
     {
-        public static Bitmap GetSnapShot()
+        public static Bitmap GetSnapshotBitmap()
         {
-            Rectangle canvasBounds = Screen.GetBounds(Point.Empty);
+            Rectangle snapshotRect = Screen.GetBounds(Point.Empty);
             using (Canvas canvas = new Canvas())
             {
+                // TODO: figure out why this has to be set here and not in the canvas InitializeComponent() call
                 canvas.TopMost = true;
                 if (canvas.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    canvasBounds = canvas.GetRectangle();
+                    snapshotRect = canvas.GetRectangle();
                 }
             }
 
-            using (Image image = new Bitmap(canvasBounds.Width, canvasBounds.Height))
+            using (Image image = new Bitmap(snapshotRect.Width, snapshotRect.Height))
             {
                 using (Graphics graphics = Graphics.FromImage(image))
                 {
-                    graphics.CopyFromScreen(new Point(canvasBounds.Left, canvasBounds.Top), Point.Empty, canvasBounds.Size);
+                    graphics.CopyFromScreen(new Point(snapshotRect.Left, snapshotRect.Top), Point.Empty, snapshotRect.Size);
                 }
                 return new Bitmap(SetBorder(image, Color.Black, 1));
             }

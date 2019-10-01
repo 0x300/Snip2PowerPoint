@@ -85,7 +85,7 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(228, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(227, 22);
             this.toolStripLabel1.Text = "Take Rectangle Screenshot: Ctrl + Shft + Z";
             // 
             // listView1
