@@ -10,23 +10,39 @@ namespace Snip2PowerPoint
 {
     // This class is responsible for creating the capture overlay (canvas)
     // and capturing an image from the user's selection 
-    class ScreenCapture
+    public static class ScreenCapture
     {
-        private Rectangle canvasBounds = Screen.GetBounds(Point.Empty);
-
-        public Bitmap GetSnapShot()
+        public static Bitmap GetSnapshotBitmap()
         {
-            using (Image image = new Bitmap(canvasBounds.Width, canvasBounds.Height))
+            Rectangle snapshotRect = Screen.GetBounds(Point.Empty);
+            using (Canvas canvas = new Canvas())
+            {
+                // TODO: figure out why this has to be set here and not in the canvas InitializeComponent() call
+                canvas.TopMost = true;
+                snapshotRect = canvas.GetRectangle();
+
+                if (canvas.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    snapshotRect = canvas.GetRectangle();
+                }
+                else
+                {
+                    // If esc was pressed we don't return a screenshot
+                    return null;
+                }
+            }
+
+            using (Image image = new Bitmap(snapshotRect.Width, snapshotRect.Height))
             {
                 using (Graphics graphics = Graphics.FromImage(image))
                 {
-                    graphics.CopyFromScreen(new Point(canvasBounds.Left, canvasBounds.Top), Point.Empty, canvasBounds.Size);
+                    graphics.CopyFromScreen(new Point(snapshotRect.Left, snapshotRect.Top), Point.Empty, snapshotRect.Size);
                 }
                 return new Bitmap(SetBorder(image, Color.Black, 1));
             }
         }
 
-        private Image SetBorder(Image srcImg, Color color, int width)
+        private static Image SetBorder(Image srcImg, Color color, int width)
         {
             // Create a copy of the image and graphics context
             Image dstImg = srcImg.Clone() as Image;
@@ -48,19 +64,6 @@ namespace Snip2PowerPoint
 
             // Return
             return dstImg;
-        }
-
-        // Brings up the snipping backdrop
-        public void SetCanvas()
-        {
-            using (Canvas canvas = new Canvas())
-            {
-                canvas.TopMost = true;
-                if (canvas.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    this.canvasBounds = canvas.GetRectangle();
-                }
-            }
         }
     }
 }

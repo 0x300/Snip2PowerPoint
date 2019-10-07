@@ -17,14 +17,16 @@ namespace Snip2PowerPoint
             this.BackColor = Color.White;
             this.Opacity = 0.25;
             this.Cursor = Cursors.Cross;
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = Screen.AllScreens[0].WorkingArea.Location;
+            this.DoubleBuffered = true;
+
+            // Event Handlers
             this.MouseDown += Canvas_MouseDown;
             this.MouseMove += Canvas_MouseMove;
             this.MouseUp += Canvas_MouseUp;
             this.Paint += Canvas_Paint;
             this.KeyDown += Canvas_KeyDown;
-            this.StartPosition = FormStartPosition.Manual;
-            this.Location = Screen.AllScreens[0].WorkingArea.Location;
-            this.DoubleBuffered = true;
         }
 
         private void Canvas_KeyDown(object sender, KeyEventArgs e)
@@ -77,20 +79,9 @@ namespace Snip2PowerPoint
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Name = "Canvas";
             this.ShowInTaskbar = false;
+            // TODO: figure out why this no worky
+            //this.TopMost = true;
             this.ResumeLayout(false);
-
-        }
-
-        private void Canvas_Shown(object sender, EventArgs e)
-        {
-            this.Activate();
-            MessageBox.Show("Canvas Shown");
-        }
-
-        private void Canvas_Activated(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Normal;
-            MessageBox.Show("Canvas Activated");
         }
     }
 }
